@@ -60,6 +60,7 @@
   }
   header.hero p { margin: 0; font-size: 16px; opacity: 0.92; max-width: 560px; }
   header.hero .hero-subtitle { margin-bottom: 10px; }
+  header.hero .hero-tagline { max-width: 560px; margin-bottom: 14px; opacity: 0.95; }
   header.hero .motto { font-style: italic; color: #f0d9be; margin-top: 18px; }
   header.hero .disclaimer {
     margin-top: 18px;
@@ -274,6 +275,7 @@
     <p class="eyebrow" id="hero-place"></p>
     <h1 id="hero-title"></h1>
     <p class="hero-subtitle" id="hero-subtitle"></p>
+    <p class="hero-tagline" id="hero-tagline"></p>
     <p id="hero-dates"></p>
     <p class="motto" id="hero-motto"></p>
     <div id="status-root"></div>
@@ -318,6 +320,7 @@
   document.getElementById("hero-place").textContent = TRIP.place || "";
   document.getElementById("hero-title").textContent = TRIP.title || "";
   document.getElementById("hero-subtitle").textContent = TRIP.subtitle || "";
+  document.getElementById("hero-tagline").textContent = TRIP.tagline || "";
   document.getElementById("hero-dates").textContent = TRIP.dates || "";
   document.getElementById("hero-motto").textContent = TRIP.motto || "";
   document.getElementById("hero-disclaimer").textContent = TRIP.disclaimer || "";
