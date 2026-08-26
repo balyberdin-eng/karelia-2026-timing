@@ -133,55 +133,53 @@
     background: var(--accent); border: 2px solid var(--bg);
   }
 
-  /* ── Day spreads ──────────────────────────────────────────────── */
+  /* ── Day spreads (full-bleed photo backdrop) ─────────────────────── */
 
-  main { padding: 90px 0 40px; }
+  main { padding: 0; }
 
   section.day-spread {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 56px;
-    align-items: start;
-    margin-bottom: 130px;
-    scroll-margin-top: 80px;
-  }
-  section.day-spread:nth-of-type(even) .day-photo-col { order: 2; }
-  section.day-spread:nth-of-type(even) .day-content { order: 1; }
-
-  .day-photo-col { position: sticky; top: 90px; }
-  .day-photo-col .frame {
-    border-radius: 6px;
-    overflow: hidden;
-    height: 78vh;
-    max-height: 640px;
     position: relative;
-  }
-  .day-photo-col img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .day-photo-col .num {
-    position: absolute;
-    top: 20px; left: 20px;
-    font-family: "Fraunces", serif;
-    font-size: 15px;
-    font-weight: 600;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
     color: #fff;
-    background: rgba(0,0,0,0.35);
-    backdrop-filter: blur(4px);
-    padding: 6px 14px;
-    border-radius: 999px;
+    scroll-margin-top: 56px;
   }
-  .day-photo-col .num.today { background: var(--accent); }
-  .day-photo-col .cap {
-    position: absolute; left: 0; right: 0; bottom: 0;
-    padding: 16px 20px;
-    color: #fff;
-    font-size: 13px;
-    background: linear-gradient(0deg, rgba(0,0,0,0.6), transparent);
+  section.day-spread .bg { position: absolute; inset: 0; z-index: 0; }
+  section.day-spread .bg img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  section.day-spread .scrim {
+    position: absolute; inset: 0; z-index: 1;
+    background: linear-gradient(180deg, rgba(12,11,8,0.35), rgba(12,11,8,0.68));
+  }
+  section.day-spread .wrap { position: relative; z-index: 2; width: 100%; padding-top: 60px; padding-bottom: 60px; }
+  section.day-spread .num {
+    position: absolute; top: 28px; right: 28px; z-index: 3;
+    font-family: "Fraunces", serif; font-size: 14px; font-weight: 600;
+    background: rgba(0,0,0,0.35); backdrop-filter: blur(4px);
+    padding: 6px 14px; border-radius: 999px;
+  }
+  section.day-spread .num.today { background: var(--accent); }
+  section.day-spread .credit {
+    position: absolute; bottom: 18px; right: 24px; z-index: 3;
+    font-size: 11.5px; color: rgba(255,255,255,0.7);
   }
 
-  .day-content .kicker { color: var(--accent); font-size: 12px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 10px; }
-  .day-content h2 { font-size: clamp(28px, 3.4vw, 40px); margin: 0 0 6px; }
-  .day-content .date { color: var(--muted); font-size: 14px; margin-bottom: 32px; }
-  .day-content.today h2::after {
+  section.day-spread:nth-of-type(even) .day-panel { margin-left: auto; }
+
+  .day-panel {
+    max-width: 620px;
+    background: rgba(18, 16, 12, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 16px;
+    padding: 40px 40px;
+  }
+  .day-panel .kicker { color: #f0d9be; font-size: 12px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 10px; }
+  .day-panel h2 { font-size: clamp(28px, 3.4vw, 40px); margin: 0 0 6px; }
+  .day-panel .date { color: rgba(255,255,255,0.7); font-size: 14px; margin-bottom: 28px; }
+  .day-panel.today h2::after {
     content: "СЕЙЧАС"; margin-left: 12px; font-family: "Inter", sans-serif;
     font-size: 10px; font-weight: 800; letter-spacing: 0.08em; color: var(--accent);
     vertical-align: middle;
@@ -191,25 +189,20 @@
     display: grid;
     grid-template-columns: 92px 1fr;
     gap: 18px;
-    padding: 16px 0;
-    border-top: 1px solid var(--line);
+    padding: 15px 0;
+    border-top: 1px solid rgba(255,255,255,0.16);
   }
-  .t-item:last-child { border-bottom: 1px solid var(--line); }
-  .t-item.past { opacity: 0.45; }
-  .t-item.now { background: var(--accent-soft); margin: 0 -16px; padding: 16px; border-radius: 10px; border-top-color: transparent; }
-  .t-item .time { font-size: 12.5px; font-weight: 700; color: var(--accent); letter-spacing: 0.03em; padding-top: 2px; }
-  .t-item .body .title { font-weight: 600; font-size: 15.5px; margin-bottom: 3px; }
-  .t-item .body .meta { font-size: 13.5px; color: var(--muted); font-style: italic; line-height: 1.5; }
-  .t-item .ico { display: none; }
+  .t-item:last-child { border-bottom: 1px solid rgba(255,255,255,0.16); }
+  .t-item.past { opacity: 0.5; }
+  .t-item.now { background: var(--accent); margin: 0 -16px; padding: 15px 16px; border-radius: 10px; border-top-color: transparent; }
+  .t-item .time { font-size: 12.5px; font-weight: 700; color: #f0d9be; letter-spacing: 0.03em; padding-top: 2px; }
+  .t-item.now .time { color: #fff; }
+  .t-item .body .title { font-weight: 600; font-size: 15px; margin-bottom: 3px; }
+  .t-item .body .meta { font-size: 13px; color: rgba(255,255,255,0.78); font-style: italic; line-height: 1.5; }
 
   @media (max-width: 860px) {
-    section.day-spread {
-      grid-template-columns: 1fr; gap: 24px; margin-bottom: 80px;
-    }
-    section.day-spread:nth-of-type(even) .day-photo-col,
-    section.day-spread:nth-of-type(even) .day-content { order: initial; }
-    .day-photo-col { position: static; }
-    .day-photo-col .frame { height: 46vh; max-height: 380px; }
+    section.day-spread { min-height: auto; padding: 100px 0 60px; align-items: flex-end; }
+    .day-panel { max-width: none; padding: 28px 24px; }
     .t-item { grid-template-columns: 72px 1fr; }
   }
 
@@ -254,7 +247,7 @@
   <div class="wrap row" id="day-nav"></div>
 </nav>
 
-<main class="wrap" id="days-root"></main>
+<main id="days-root"></main>
 
 <section class="wrap extra" id="lodging-root"></section>
 
@@ -343,20 +336,17 @@
     section.className = "day-spread";
     section.id = id;
 
-    const photoCol = document.createElement("div");
-    photoCol.className = "day-photo-col";
     const img = day.image || {};
-    photoCol.innerHTML = `
-      <div class="frame">
-        <img src="${img.src || ""}" alt="${img.alt || ""}" loading="lazy">
-        <div class="num${isToday ? " today" : ""}">${String(i + 1).padStart(2, "0")} / ${String(TRIP.days.length).padStart(2, "0")}</div>
-        ${img.caption ? `<div class="cap">${img.caption}</div>` : ""}
-      </div>
+    section.innerHTML = `
+      <div class="bg"><img src="${img.src || ""}" alt="${img.alt || ""}" loading="lazy"></div>
+      <div class="scrim"></div>
+      <div class="num${isToday ? " today" : ""}">${String(i + 1).padStart(2, "0")} / ${String(TRIP.days.length).padStart(2, "0")}</div>
+      ${img.caption ? `<div class="credit">${img.caption}</div>` : ""}
+      <div class="wrap"><div class="day-panel"></div></div>
     `;
-    section.appendChild(photoCol);
 
-    const contentCol = document.createElement("div");
-    contentCol.className = "day-content" + (isToday ? " today" : "");
+    const contentCol = section.querySelector(".day-panel");
+    if (isToday) contentCol.classList.add("today");
     contentCol.innerHTML = `
       <div class="kicker">День ${i + 1}</div>
       <h2>${day.title}</h2>
@@ -386,7 +376,6 @@
       contentCol.appendChild(item);
     });
 
-    section.appendChild(contentCol);
     daysRoot.appendChild(section);
   });
 
