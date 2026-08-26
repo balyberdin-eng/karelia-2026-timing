@@ -6,12 +6,16 @@
 <title>Karhun jäljillä · Тайминг поездки</title>
 <style>
   :root {
-    --bg: #faf7f2;
-    --ink: #24211d;
-    --muted: #8a8378;
-    --line: #e4ddd0;
-    --accent: #c9622f;
-    --accent-soft: #f3e2d6;
+    --bg: #f3efe3;
+    --ink: #1e2a20;
+    --muted: #6d7568;
+    --line: #e0dac8;
+    --forest: #1f4d38;
+    --forest-dark: #123023;
+    --lake: #2f7c9e;
+    --amber: #d98e3a;
+    --amber-soft: #f5e3c9;
+    --marble: #cfd6d2;
     --card: #ffffff;
   }
 
@@ -27,113 +31,111 @@
 
   .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px; }
 
+  svg.icon { width: 100%; height: 100%; display: block; }
+
+  /* ── Hero ─────────────────────────────────────────────────────── */
+
   header.hero {
-    padding: 56px 0 32px;
+    position: relative;
+    overflow: hidden;
+    padding: 64px 0 0;
     text-align: center;
+    background: linear-gradient(160deg, var(--forest-dark) 0%, var(--forest) 55%, var(--lake) 130%);
+    color: #f3efe3;
   }
+  header.hero .wrap { position: relative; z-index: 2; padding-bottom: 26px; }
+
   header.hero .eyebrow {
     font-size: 12px;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.25em;
     text-transform: uppercase;
-    color: var(--accent);
-    font-weight: 600;
-    margin-bottom: 10px;
+    color: var(--amber);
+    font-weight: 700;
+    margin-bottom: 12px;
   }
   header.hero h1 {
-    font-size: 34px;
-    margin: 0 0 10px;
-    line-height: 1.15;
+    font-size: 36px;
+    margin: 0 0 12px;
+    line-height: 1.1;
+    letter-spacing: 0.02em;
   }
-  header.hero p {
-    color: var(--muted);
-    margin: 0;
-    font-size: 15px;
-  }
+  header.hero p { margin: 0; font-size: 15px; opacity: 0.92; }
   header.hero .hero-subtitle {
     max-width: 480px;
-    margin: 0 auto 6px;
+    margin: 0 auto 8px;
+    opacity: 0.85;
   }
   header.hero .motto {
-    margin-top: 18px;
+    margin-top: 20px;
     font-style: italic;
-    color: var(--ink);
+    color: var(--amber-soft);
   }
   header.hero .disclaimer {
     max-width: 480px;
-    margin: 10px auto 0;
+    margin: 14px auto 0;
     font-size: 13px;
-    color: var(--muted);
-    background: var(--accent-soft);
+    opacity: 0.85;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 12px;
     padding: 10px 14px;
   }
 
-  section.extra {
-    padding-bottom: 48px;
-  }
-  section.extra h2 {
-    font-size: 20px;
-    margin-bottom: 6px;
-  }
-  section.extra > .note {
-    color: var(--muted);
-    font-size: 13px;
-    margin: 0 0 20px;
-  }
-  .house-grid {
-    display: grid;
-    gap: 14px;
-  }
-  .house-card {
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    padding: 16px 18px;
-  }
-  .house-card h3 {
-    font-size: 15px;
-    margin: 0 0 6px;
-  }
-  .house-card .people {
-    font-size: 13px;
-    color: var(--ink);
-    margin-bottom: 6px;
-  }
-  .house-card .note {
-    font-size: 13px;
-    color: var(--muted);
-    margin: 0;
-  }
-
-  .glossary-grid {
-    display: grid;
-    gap: 10px;
-  }
-  .glossary-grid .term-row {
-    display: flex;
-    gap: 10px;
-    align-items: baseline;
-    background: var(--card);
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    padding: 10px 14px;
-  }
-  .glossary-grid .term {
+  .status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 22px;
+    padding: 8px 18px;
+    border-radius: 999px;
+    background: var(--amber);
+    color: #2a1c05;
     font-weight: 700;
-    color: var(--accent);
-    flex-shrink: 0;
-    min-width: 70px;
-  }
-  .glossary-grid .def {
     font-size: 13px;
-    color: var(--muted);
   }
+  .status-badge.live { background: #e2664a; color: #fff; }
+  .status-badge.live .pulse {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #fff;
+    animation: pulse 1.4s ease-in-out infinite;
+  }
+  .status-badge.done { background: rgba(255,255,255,0.15); color: #f3efe3; border: 1px solid rgba(255,255,255,0.25); }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+
+  .trip-progress {
+    display: flex;
+    gap: 5px;
+    max-width: 360px;
+    margin: 20px auto 0;
+  }
+  .trip-progress .seg {
+    flex: 1;
+    height: 5px;
+    border-radius: 3px;
+    background: rgba(255, 255, 255, 0.2);
+    overflow: hidden;
+  }
+  .trip-progress .seg > i {
+    display: block;
+    height: 100%;
+    width: 0%;
+    background: var(--amber);
+    border-radius: 3px;
+  }
+  .trip-progress .seg.today > i { background: #e2664a; }
+
+  .hero-scene { display: block; width: 100%; height: auto; }
+
+  /* ── Day nav ──────────────────────────────────────────────────── */
 
   nav.days {
     position: sticky;
     top: 0;
     z-index: 10;
-    background: rgba(250, 247, 242, 0.92);
+    background: rgba(243, 239, 227, 0.92);
     backdrop-filter: blur(8px);
     border-bottom: 1px solid var(--line);
     padding: 12px 0;
@@ -157,19 +159,41 @@
     font-weight: 500;
     transition: all 0.15s ease;
     white-space: nowrap;
+    position: relative;
   }
   nav.days a.active,
   nav.days a:hover {
-    background: var(--accent);
-    border-color: var(--accent);
+    background: var(--forest);
+    border-color: var(--forest);
     color: white;
   }
+  nav.days a.today::after {
+    content: "";
+    position: absolute;
+    top: -2px; right: -2px;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #e2664a;
+    border: 2px solid var(--bg);
+  }
 
-  main { padding: 40px 0 80px; }
+  /* ── Days / timeline ──────────────────────────────────────────── */
+
+  main { padding: 40px 0 30px; }
 
   section.day {
     margin-bottom: 56px;
     scroll-margin-top: 70px;
+  }
+  section.day.today .day-head .num { background: #e2664a; }
+  section.day.today .day-head .titles h2::after {
+    content: "СЕЙЧАС";
+    margin-left: 10px;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: #e2664a;
+    vertical-align: middle;
   }
 
   .day-head {
@@ -182,7 +206,7 @@
     font-size: 13px;
     font-weight: 700;
     color: white;
-    background: var(--accent);
+    background: var(--forest);
     width: 28px;
     height: 28px;
     border-radius: 50%;
@@ -200,15 +224,15 @@
     font-size: 13px;
   }
 
-  .timeline { position: relative; padding-left: 34px; }
+  .timeline { position: relative; padding-left: 40px; }
   .timeline::before {
     content: "";
     position: absolute;
-    left: 13px;
+    left: 15px;
     top: 6px;
     bottom: 6px;
     width: 2px;
-    background: var(--line);
+    background: repeating-linear-gradient(180deg, var(--line) 0 6px, transparent 6px 10px);
   }
 
   .event {
@@ -216,18 +240,25 @@
     margin-bottom: 20px;
   }
   .event:last-child { margin-bottom: 0; }
+  .event.past { opacity: 0.55; }
   .event .dot {
     position: absolute;
-    left: -34px;
-    top: 4px;
-    width: 28px;
-    height: 28px;
+    left: -40px;
+    top: 2px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
-    background: var(--accent-soft);
+    background: var(--amber-soft);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
+    padding: 7px;
+    color: var(--forest-dark);
+  }
+  .event.now .dot {
+    background: #e2664a;
+    color: #fff;
+    box-shadow: 0 0 0 4px rgba(226, 102, 74, 0.2);
   }
   .event .card {
     background: var(--card);
@@ -235,10 +266,11 @@
     border-radius: 14px;
     padding: 14px 16px;
   }
+  .event.now .card { border-color: #e2664a; }
   .event .time {
     font-size: 12px;
     font-weight: 700;
-    color: var(--accent);
+    color: var(--lake);
     letter-spacing: 0.02em;
   }
   .event .title {
@@ -251,6 +283,64 @@
     color: var(--muted);
   }
 
+  /* ── Divider ──────────────────────────────────────────────────── */
+
+  .marble-divider { display: block; width: 100%; height: 40px; margin: 10px 0 40px; }
+
+  /* ── Extra sections ───────────────────────────────────────────── */
+
+  section.extra { padding-bottom: 48px; }
+  section.extra .section-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+  }
+  section.extra .section-head svg.icon { width: 26px; height: 26px; color: var(--forest); }
+  section.extra h2 { font-size: 20px; margin: 0; }
+  section.extra > .note {
+    color: var(--muted);
+    font-size: 13px;
+    margin: 0 0 20px;
+  }
+
+  .house-grid { display: grid; gap: 14px; }
+  .house-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px 18px;
+    display: flex;
+    gap: 14px;
+  }
+  .house-card .roof {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    color: var(--amber);
+  }
+  .house-card h3 { font-size: 15px; margin: 0 0 6px; }
+  .house-card .people { font-size: 13px; color: var(--ink); margin-bottom: 6px; }
+  .house-card .note { font-size: 13px; color: var(--muted); margin: 0; }
+
+  .glossary-grid { display: grid; gap: 10px; }
+  .glossary-grid .term-row {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 10px 14px;
+  }
+  .glossary-grid .term {
+    font-weight: 700;
+    color: var(--forest);
+    flex-shrink: 0;
+    min-width: 70px;
+  }
+  .glossary-grid .def { font-size: 13px; color: var(--muted); }
+
   footer {
     text-align: center;
     color: var(--muted);
@@ -259,7 +349,7 @@
   }
 
   @media (max-width: 480px) {
-    header.hero h1 { font-size: 26px; }
+    header.hero h1 { font-size: 27px; }
   }
 </style>
 </head>
@@ -272,7 +362,33 @@
     <p class="hero-subtitle" id="hero-subtitle"></p>
     <p id="hero-dates"></p>
     <p class="motto" id="hero-motto"></p>
+    <div id="status-root"></div>
     <p class="disclaimer" id="hero-disclaimer"></p>
+  </div>
+
+  <!-- decorative scene: lake, pines, bear -->
+  <svg class="hero-scene" viewBox="0 0 720 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M0 90 Q 60 70 120 90 T 240 90 T 360 90 T 480 90 T 600 90 T 720 90 V120 H0 Z" fill="#0f2a1e" opacity="0.6"/>
+    <path d="M0 100 Q 60 85 120 100 T 240 100 T 360 100 T 480 100 T 600 100 T 720 100 V120 H0 Z" fill="#0a1e15"/>
+    <g fill="#0a1e15">
+      <path d="M60 100 L72 60 L84 100 Z"/>
+      <path d="M100 100 L114 48 L128 100 Z"/>
+      <path d="M300 100 L312 55 L324 100 Z"/>
+      <path d="M340 100 L354 45 L368 100 Z"/>
+      <path d="M560 100 L572 58 L584 100 Z"/>
+      <path d="M600 100 L614 46 L628 100 Z"/>
+    </g>
+    <g fill="#2a1c12" opacity="0.85">
+      <ellipse cx="460" cy="103" rx="16" ry="10"/>
+      <circle cx="446" cy="94" r="8"/>
+      <circle cx="440" cy="90" r="2.4"/>
+      <circle cx="452" cy="90" r="2.4"/>
+    </g>
+  </svg>
+
+  <div class="wrap">
+    <div class="trip-progress" id="trip-progress"></div>
+    <div style="height:22px"></div>
   </div>
 </header>
 
@@ -282,6 +398,12 @@
 
 <main class="wrap" id="days-root"></main>
 
+<svg class="wrap marble-divider" viewBox="0 0 720 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="720" height="40" fill="none"/>
+  <path d="M0 20 C 100 5, 180 35, 280 18 S 460 2, 560 22 S 680 30, 720 15" stroke="#cfd6d2" stroke-width="2" fill="none"/>
+  <path d="M0 26 C 120 12, 200 38, 320 24 S 480 10, 600 28 S 700 34, 720 24" stroke="#e0dac8" stroke-width="2" fill="none"/>
+</svg>
+
 <section class="wrap extra" id="lodging-root"></section>
 
 <section class="wrap extra" id="glossary-root"></section>
@@ -290,17 +412,28 @@
 
 <script src="trip.js"></script>
 <script>
+  // ── Icon set ─────────────────────────────────────────────────────
   const ICONS = {
-    flight: "✈️",
-    train: "🚄",
-    car: "🚗",
-    hotel: "🛎️",
-    food: "🍽️",
-    sight: "📍",
-    walk: "🚶",
-    note: "📝",
+    flight: '<path d="M2 12l9-3 4-7 2 1-2 6.5 6 1.5v2l-6 .5-1 6.5-2 1-1-7-9-1.5z"/>',
+    train: '<rect x="5" y="3" width="14" height="13" rx="3"/><path d="M5 11h14M9 16l-3 5M15 16l3 5"/><circle cx="9" cy="7.5" r="0" /><path d="M8 7h8" stroke-width="1.6"/>',
+    car: '<path d="M4 16V11l2.5-5h11L20 11v5"/><path d="M4 16h16"/><circle cx="8" cy="17.5" r="1.6"/><circle cx="16" cy="17.5" r="1.6"/><path d="M6 11h12"/>',
+    hotel: '<path d="M4 21V9l8-6 8 6v12"/><path d="M9 21v-7h6v7"/>',
+    food: '<path d="M6 3v8a2 2 0 002 2 2 2 0 002-2V3M8 13v8M16 3c-2 0-3 2-3 5s1 3 3 3 3-1 3-3-1-5-3-5zM16 11v10"/>',
+    sight: '<path d="M3 19l6-10 4 6 2-3 6 7z"/><path d="M3 19h18"/>',
+    walk: '<circle cx="13" cy="4" r="1.8"/><path d="M9 21l2-6-2-3 1-5 4 1 3 3-2 2 3 4-2 5"/>',
+    note: '<path d="M6 3h9l3 3v15H6z"/><path d="M15 3v3h3M9 11h6M9 15h6"/>',
+    boat: '<path d="M4 15h16l-2 5H6z"/><path d="M12 15V4M12 4c3 .5 5 2 6 5M12 6c-2.5.5-4 2-5 4"/>',
+    sauna: '<path d="M5 21c0-4 2-3 2-6s-2-2-2-6 2-3 2-6M11 21c0-4 2-3 2-6s-2-2-2-6 2-3 2-6M17 21c0-4 2-3 2-6s-2-2-2-6 2-3 2-6" stroke-width="1.6"/>',
+    paintball: '<circle cx="12" cy="12" r="8"/><path d="M12 4v3M12 17v3M4 12h3M17 12h3M6.5 6.5l2 2M15.5 15.5l2 2M6.5 17.5l2-2M15.5 8.5l2-2"/>',
+    monastery: '<path d="M12 2c2 2 2 4 0 6-2-2-2-4 0-6z"/><path d="M12 8v13M7 21V13a5 5 0 0110 0v8"/><path d="M5 21h14"/>',
   };
 
+  function iconSvg(type, size = 18) {
+    const body = ICONS[type] || '<circle cx="12" cy="12" r="3"/>';
+    return `<svg class="icon" viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">${body}</svg>`;
+  }
+
+  // ── Header text ──────────────────────────────────────────────────
   document.getElementById("hero-place").textContent = TRIP.place || "";
   document.getElementById("hero-title").textContent = TRIP.title || "";
   document.getElementById("hero-subtitle").textContent = TRIP.subtitle || "";
@@ -308,20 +441,68 @@
   document.getElementById("hero-motto").textContent = TRIP.motto || "";
   document.getElementById("hero-disclaimer").textContent = TRIP.disclaimer || "";
 
+  // ── Trip status (countdown / live / done) ───────────────────────
+  const now = new Date();
+  const days = TRIP.days.filter((d) => d.iso);
+  const dayDates = days.map((d) => new Date(d.iso + "T00:00:00"));
+  const tripStart = dayDates[0];
+  const tripEnd = dayDates.length ? new Date(dayDates[dayDates.length - 1].getTime() + 24 * 3600 * 1000) : null;
+
+  function daysBetween(a, b) {
+    return Math.ceil((b - a) / (24 * 3600 * 1000));
+  }
+  function plural(n, one, few, many) {
+    const m10 = n % 10, m100 = n % 100;
+    if (m10 === 1 && m100 !== 11) return one;
+    if (m10 >= 2 && m10 <= 4 && (m100 < 10 || m100 >= 20)) return few;
+    return many;
+  }
+
+  const statusRoot = document.getElementById("status-root");
+  let todayIso = null;
+
+  if (tripStart && now < tripStart) {
+    const n = daysBetween(now, tripStart);
+    statusRoot.innerHTML = `<div class="status-badge">До поездки: ${n} ${plural(n, "день", "дня", "дней")}</div>`;
+  } else if (tripEnd && now >= tripStart && now < tripEnd) {
+    todayIso = now.toISOString().slice(0, 10);
+    const idx = days.findIndex((d) => d.iso === todayIso);
+    statusRoot.innerHTML = `<div class="status-badge live"><span class="pulse"></span> Поездка идёт — день ${idx >= 0 ? idx + 1 : "?"} из ${days.length}</div>`;
+  } else if (tripEnd) {
+    statusRoot.innerHTML = `<div class="status-badge done">Поездка завершена — Näkemiin, Karjala!</div>`;
+  }
+
+  // progress segments
+  const progRoot = document.getElementById("trip-progress");
+  days.forEach((d) => {
+    const seg = document.createElement("div");
+    seg.className = "seg" + (d.iso === todayIso ? " today" : "");
+    const dDate = new Date(d.iso + "T00:00:00");
+    const dEnd = new Date(dDate.getTime() + 24 * 3600 * 1000);
+    let fill = 0;
+    if (now >= dEnd) fill = 100;
+    else if (now >= dDate && now < dEnd) fill = Math.round(((now - dDate) / (dEnd - dDate)) * 100);
+    seg.innerHTML = `<i style="width:${fill}%"></i>`;
+    progRoot.appendChild(seg);
+  });
+
+  // ── Days & timeline ──────────────────────────────────────────────
   const dayNav = document.getElementById("day-nav");
   const daysRoot = document.getElementById("days-root");
 
   TRIP.days.forEach((day, i) => {
     const id = `day-${i + 1}`;
+    const isToday = day.iso === todayIso;
 
     const link = document.createElement("a");
     link.href = `#${id}`;
     link.textContent = `День ${i + 1}`;
     link.dataset.target = id;
+    if (isToday) link.classList.add("today");
     dayNav.appendChild(link);
 
     const section = document.createElement("section");
-    section.className = "day";
+    section.className = "day" + (isToday ? " today" : "");
     section.id = id;
 
     const head = document.createElement("div");
@@ -340,9 +521,19 @@
 
     day.events.forEach((ev) => {
       const event = document.createElement("div");
-      event.className = "event";
+      let cls = "event";
+      if (isToday) {
+        const t = ev.time.match(/(\d{1,2}):(\d{2})/);
+        if (t) {
+          const evMinutes = parseInt(t[1], 10) * 60 + parseInt(t[2], 10);
+          const nowMinutes = now.getHours() * 60 + now.getMinutes();
+          if (evMinutes < nowMinutes - 30) cls += " past";
+          else if (evMinutes <= nowMinutes + 30) cls += " now";
+        }
+      }
+      event.className = cls;
       event.innerHTML = `
-        <div class="dot">${ICONS[ev.type] || "•"}</div>
+        <div class="dot">${iconSvg(ev.type)}</div>
         <div class="card">
           <div class="time">${ev.time}</div>
           <div class="title">${ev.title}</div>
@@ -356,39 +547,42 @@
     daysRoot.appendChild(section);
   });
 
-  // lodging
+  // ── Lodging ──────────────────────────────────────────────────────
   if (TRIP.lodging) {
     const root = document.getElementById("lodging-root");
     const grid = TRIP.lodging.houses
       .map(
         (h) => `
       <div class="house-card">
-        <h3>${h.name}</h3>
-        <div class="people">${h.people}</div>
-        <p class="note">${h.note || ""}</p>
+        <div class="roof">${iconSvg("hotel", 34)}</div>
+        <div>
+          <h3>${h.name}</h3>
+          <div class="people">${h.people}</div>
+          <p class="note">${h.note || ""}</p>
+        </div>
       </div>`
       )
       .join("");
     root.innerHTML = `
-      <h2>${TRIP.lodging.title}</h2>
+      <div class="section-head">${iconSvg("hotel", 26)}<h2>${TRIP.lodging.title}</h2></div>
       <p class="note">${TRIP.lodging.note || ""}</p>
       <div class="house-grid">${grid}</div>
     `;
   }
 
-  // glossary
+  // ── Glossary ─────────────────────────────────────────────────────
   if (TRIP.glossary) {
     const root = document.getElementById("glossary-root");
     const rows = TRIP.glossary.words
       .map((w) => `<div class="term-row"><span class="term">${w.term}</span><span class="def">${w.def}</span></div>`)
       .join("");
     root.innerHTML = `
-      <h2>${TRIP.glossary.title}</h2>
+      <div class="section-head">${iconSvg("note", 26)}<h2>${TRIP.glossary.title}</h2></div>
       <div class="glossary-grid">${rows}</div>
     `;
   }
 
-  // active day highlight on scroll
+  // ── Active day highlight on scroll ───────────────────────────────
   const links = [...dayNav.querySelectorAll("a")];
   const sections = [...daysRoot.querySelectorAll("section.day")];
   const observer = new IntersectionObserver(
@@ -403,6 +597,12 @@
   );
   sections.forEach((s) => observer.observe(s));
   if (links[0]) links[0].classList.add("active");
+
+  // jump to "today" section automatically if the trip is live
+  if (todayIso) {
+    const todaySection = sections.find((s) => s.classList.contains("today"));
+    if (todaySection) setTimeout(() => todaySection.scrollIntoView({ behavior: "smooth", block: "start" }), 300);
+  }
 </script>
 
 </body>
