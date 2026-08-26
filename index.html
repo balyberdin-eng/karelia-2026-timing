@@ -214,8 +214,11 @@
   section.extra h2 { font-size: 26px; margin: 0; }
   section.extra > .note { color: var(--muted); font-size: 14px; margin: 0 0 28px; max-width: 560px; }
 
-  .house-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; }
-  .house-card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 22px; }
+  .house-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 22px; }
+  .house-card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+  .house-card .photo { height: 170px; overflow: hidden; }
+  .house-card .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .house-card .body { padding: 20px 22px; }
   .house-card h3 { font-size: 16px; margin: 0 0 8px; font-weight: 600; }
   .house-card .people { font-size: 13.5px; color: var(--ink); margin-bottom: 8px; }
   .house-card .note { font-size: 13.5px; color: var(--muted); margin: 0; font-style: italic; }
@@ -385,9 +388,12 @@
     const grid = TRIP.lodging.houses
       .map((h) => `
       <div class="house-card">
-        <h3>${h.name}</h3>
-        <div class="people">${h.people}</div>
-        <p class="note">${h.note || ""}</p>
+        ${h.image ? `<div class="photo"><img src="${h.image.src}" alt="${h.image.alt || ""}" loading="lazy"></div>` : ""}
+        <div class="body">
+          <h3>${h.name}</h3>
+          <div class="people">${h.people}</div>
+          <p class="note">${h.note || ""}</p>
+        </div>
       </div>`)
       .join("");
     root.innerHTML = `
