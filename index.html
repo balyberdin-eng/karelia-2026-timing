@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Karhun jäljillä · Тайминг поездки</title>
+<style>
+  :root {
+    --bg: #faf7f2;
+    --ink: #24211d;
+    --muted: #8a8378;
+    --line: #e4ddd0;
+    --accent: #c9622f;
+    --accent-soft: #f3e2d6;
+    --card: #ffffff;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px; }
+
+  header.hero {
+    padding: 56px 0 32px;
+    text-align: center;
+  }
+  header.hero .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  header.hero h1 {
+    font-size: 34px;
+    margin: 0 0 10px;
+    line-height: 1.15;
+  }
+  header.hero p {
+    color: var(--muted);
+    margin: 0;
+    font-size: 15px;
+  }
+  header.hero .hero-subtitle {
+    max-width: 480px;
+    margin: 0 auto 6px;
+  }
+  header.hero .motto {
+    margin-top: 18px;
+    font-style: italic;
+    color: var(--ink);
+  }
+  header.hero .disclaimer {
+    max-width: 480px;
+    margin: 10px auto 0;
+    font-size: 13px;
+    color: var(--muted);
+    background: var(--accent-soft);
+    border-radius: 12px;
+    padding: 10px 14px;
+  }
+
+  section.extra {
+    padding-bottom: 48px;
+  }
+  section.extra h2 {
+    font-size: 20px;
+    margin-bottom: 6px;
+  }
+  section.extra > .note {
+    color: var(--muted);
+    font-size: 13px;
+    margin: 0 0 20px;
+  }
+  .house-grid {
+    display: grid;
+    gap: 14px;
+  }
+  .house-card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 16px 18px;
+  }
+  .house-card h3 {
+    font-size: 15px;
+    margin: 0 0 6px;
+  }
+  .house-card .people {
+    font-size: 13px;
+    color: var(--ink);
+    margin-bottom: 6px;
+  }
+  .house-card .note {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  .glossary-grid {
+    display: grid;
+    gap: 10px;
+  }
+  .glossary-grid .term-row {
+    display: flex;
+    gap: 10px;
+    align-items: baseline;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 10px 14px;
+  }
+  .glossary-grid .term {
+    font-weight: 700;
+    color: var(--accent);
+    flex-shrink: 0;
+    min-width: 70px;
+  }
+  .glossary-grid .def {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  nav.days {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(250, 247, 242, 0.92);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--line);
+    padding: 12px 0;
+  }
+  nav.days .row {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  nav.days .row::-webkit-scrollbar { display: none; }
+  nav.days a {
+    flex-shrink: 0;
+    text-decoration: none;
+    color: var(--ink);
+    background: var(--card);
+    border: 1px solid var(--line);
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+  }
+  nav.days a.active,
+  nav.days a:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: white;
+  }
+
+  main { padding: 40px 0 80px; }
+
+  section.day {
+    margin-bottom: 56px;
+    scroll-margin-top: 70px;
+  }
+
+  .day-head {
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .day-head .num {
+    font-size: 13px;
+    font-weight: 700;
+    color: white;
+    background: var(--accent);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .day-head .titles h2 {
+    margin: 0;
+    font-size: 20px;
+  }
+  .day-head .titles .date {
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .timeline { position: relative; padding-left: 34px; }
+  .timeline::before {
+    content: "";
+    position: absolute;
+    left: 13px;
+    top: 6px;
+    bottom: 6px;
+    width: 2px;
+    background: var(--line);
+  }
+
+  .event {
+    position: relative;
+    margin-bottom: 20px;
+  }
+  .event:last-child { margin-bottom: 0; }
+  .event .dot {
+    position: absolute;
+    left: -34px;
+    top: 4px;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--accent-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+  }
+  .event .card {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 14px 16px;
+  }
+  .event .time {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.02em;
+  }
+  .event .title {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 3px 0 2px;
+  }
+  .event .meta {
+    font-size: 13px;
+    color: var(--muted);
+  }
+
+  footer {
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+    padding: 0 0 40px;
+  }
+
+  @media (max-width: 480px) {
+    header.hero h1 { font-size: 26px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow" id="hero-place"></p>
+    <h1 id="hero-title"></h1>
+    <p class="hero-subtitle" id="hero-subtitle"></p>
+    <p id="hero-dates"></p>
+    <p class="motto" id="hero-motto"></p>
+    <p class="disclaimer" id="hero-disclaimer"></p>
+  </div>
+</header>
+
+<nav class="days">
+  <div class="wrap row" id="day-nav"></div>
+</nav>
+
+<main class="wrap" id="days-root"></main>
+
+<section class="wrap extra" id="lodging-root"></section>
+
+<section class="wrap extra" id="glossary-root"></section>
+
+<footer>Составлено вручную · заменить данные на свой маршрут в trip.js</footer>
+
+<script src="trip.js"></script>
+<script>
+  const ICONS = {
+    flight: "✈️",
+    train: "🚄",
+    car: "🚗",
+    hotel: "🛎️",
+    food: "🍽️",
+    sight: "📍",
+    walk: "🚶",
+    note: "📝",
+  };
+
+  document.getElementById("hero-place").textContent = TRIP.place || "";
+  document.getElementById("hero-title").textContent = TRIP.title || "";
+  document.getElementById("hero-subtitle").textContent = TRIP.subtitle || "";
+  document.getElementById("hero-dates").textContent = TRIP.dates || "";
+  document.getElementById("hero-motto").textContent = TRIP.motto || "";
+  document.getElementById("hero-disclaimer").textContent = TRIP.disclaimer || "";
+
+  const dayNav = document.getElementById("day-nav");
+  const daysRoot = document.getElementById("days-root");
+
+  TRIP.days.forEach((day, i) => {
+    const id = `day-${i + 1}`;
+
+    const link = document.createElement("a");
+    link.href = `#${id}`;
+    link.textContent = `День ${i + 1}`;
+    link.dataset.target = id;
+    dayNav.appendChild(link);
+
+    const section = document.createElement("section");
+    section.className = "day";
+    section.id = id;
+
+    const head = document.createElement("div");
+    head.className = "day-head";
+    head.innerHTML = `
+      <div class="num">${i + 1}</div>
+      <div class="titles">
+        <h2>${day.title}</h2>
+        <div class="date">${day.date}</div>
+      </div>
+    `;
+    section.appendChild(head);
+
+    const timeline = document.createElement("div");
+    timeline.className = "timeline";
+
+    day.events.forEach((ev) => {
+      const event = document.createElement("div");
+      event.className = "event";
+      event.innerHTML = `
+        <div class="dot">${ICONS[ev.type] || "•"}</div>
+        <div class="card">
+          <div class="time">${ev.time}</div>
+          <div class="title">${ev.title}</div>
+          ${ev.meta ? `<div class="meta">${ev.meta}</div>` : ""}
+        </div>
+      `;
+      timeline.appendChild(event);
+    });
+
+    section.appendChild(timeline);
+    daysRoot.appendChild(section);
+  });
+
+  // lodging
+  if (TRIP.lodging) {
+    const root = document.getElementById("lodging-root");
+    const grid = TRIP.lodging.houses
+      .map(
+        (h) => `
+      <div class="house-card">
+        <h3>${h.name}</h3>
+        <div class="people">${h.people}</div>
+        <p class="note">${h.note || ""}</p>
+      </div>`
+      )
+      .join("");
+    root.innerHTML = `
+      <h2>${TRIP.lodging.title}</h2>
+      <p class="note">${TRIP.lodging.note || ""}</p>
+      <div class="house-grid">${grid}</div>
+    `;
+  }
+
+  // glossary
+  if (TRIP.glossary) {
+    const root = document.getElementById("glossary-root");
+    const rows = TRIP.glossary.words
+      .map((w) => `<div class="term-row"><span class="term">${w.term}</span><span class="def">${w.def}</span></div>`)
+      .join("");
+    root.innerHTML = `
+      <h2>${TRIP.glossary.title}</h2>
+      <div class="glossary-grid">${rows}</div>
+    `;
+  }
+
+  // active day highlight on scroll
+  const links = [...dayNav.querySelectorAll("a")];
+  const sections = [...daysRoot.querySelectorAll("section.day")];
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          links.forEach((l) => l.classList.toggle("active", l.dataset.target === entry.target.id));
+        }
+      });
+    },
+    { rootMargin: "-30% 0px -60% 0px" }
+  );
+  sections.forEach((s) => observer.observe(s));
+  if (links[0]) links[0].classList.add("active");
+</script>
+
+</body>
+</html>
