@@ -44,6 +44,30 @@
     color: #fff;
   }
   header.hero .inner { padding: 64px 24px 56px; width: 100%; max-width: 1080px; margin: 0 auto; }
+  .brand-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #fff;
+    border-radius: 10px;
+    padding: 7px 14px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+  }
+  .brand-badge img { height: 22px; width: auto; display: block; }
+  .brand-badge span {
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.02em;
+    color: #201f1f;
+  }
+  @media (max-width: 480px) {
+    .brand-badge { padding: 6px 11px; margin-bottom: 16px; }
+    .brand-badge img { height: 18px; }
+    .brand-badge span { font-size: 12px; }
+  }
+
   header.hero .eyebrow {
     font-size: 12px;
     letter-spacing: 0.3em;
@@ -316,6 +340,7 @@
 
 <header class="hero">
   <div class="inner">
+    <div class="brand-badge"><img src="photos/skm-pro-icon.png" alt="SKM.PRO"><span>SKM.PRO</span></div>
     <p class="eyebrow" id="hero-place"></p>
     <h1 id="hero-title"></h1>
     <p class="hero-subtitle" id="hero-subtitle"></p>
