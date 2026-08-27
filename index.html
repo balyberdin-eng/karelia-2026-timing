@@ -167,6 +167,7 @@
   }
 
   section.day-spread:nth-of-type(even) .day-panel { margin-left: auto; }
+  section.day-spread.pin-left > .wrap { margin: 0; padding-left: 40px; padding-right: 24px; }
 
   .day-panel {
     max-width: 540px;
@@ -441,7 +442,7 @@
     dayNav.appendChild(link);
 
     const section = document.createElement("section");
-    section.className = "day-spread";
+    section.className = "day-spread" + (i === 2 || i === 4 ? " pin-left" : "");
     section.id = id;
 
     const img = day.image || {};
