@@ -169,22 +169,37 @@
   section.day-spread:nth-of-type(even) .day-panel { margin-left: auto; }
 
   .day-panel {
-    max-width: 620px;
-    background: rgba(18, 16, 12, 0.5);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+    max-width: 540px;
+    max-height: min(64vh, 620px);
+    display: flex;
+    flex-direction: column;
+    background: rgba(16, 14, 10, 0.4);
+    backdrop-filter: blur(7px);
+    -webkit-backdrop-filter: blur(7px);
     border: 1px solid rgba(255,255,255,0.12);
     border-radius: 16px;
-    padding: 40px 40px;
+    padding: 30px 32px;
   }
-  .day-panel .kicker { color: #f0d9be; font-size: 12px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 10px; }
-  .day-panel h2 { font-size: clamp(28px, 3.4vw, 40px); margin: 0 0 6px; }
-  .day-panel .date { color: rgba(255,255,255,0.7); font-size: 14px; margin-bottom: 28px; }
+  .day-panel .kicker { color: #f0d9be; font-size: 12px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 8px; flex-shrink: 0; }
+  .day-panel h2 { font-size: clamp(24px, 2.8vw, 34px); margin: 0 0 6px; flex-shrink: 0; text-shadow: 0 2px 12px rgba(0,0,0,0.5); }
+  .day-panel .date { color: rgba(255,255,255,0.75); font-size: 14px; margin-bottom: 18px; flex-shrink: 0; }
   .day-panel.today h2::after {
     content: "СЕЙЧАС"; margin-left: 12px; font-family: "Inter", sans-serif;
     font-size: 10px; font-weight: 800; letter-spacing: 0.08em; color: var(--accent);
     vertical-align: middle;
   }
+
+  .t-list {
+    overflow-y: auto;
+    padding-right: 10px;
+    margin-right: -10px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.35) transparent;
+    -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 14px, #000 calc(100% - 14px), transparent 100%);
+    mask-image: linear-gradient(180deg, transparent 0, #000 14px, #000 calc(100% - 14px), transparent 100%);
+  }
+  .t-list::-webkit-scrollbar { width: 6px; }
+  .t-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 3px; }
 
   .t-item {
     display: grid;
@@ -265,6 +280,20 @@
   .glossary-grid .term { display: block; font-family: "Fraunces", serif; font-weight: 600; color: #f0d9be; font-size: 17px; margin-bottom: 4px; }
   .glossary-grid .def { font-size: 13.5px; color: rgba(255,255,255,0.78); }
 
+  .ornament-footer {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    z-index: 3;
+    height: 40px;
+    background-image: url("photos/ornament-birds.jpg");
+    background-repeat: repeat-x;
+    background-size: auto 100%;
+    background-position: center;
+  }
+  @media (max-width: 480px) {
+    .ornament-footer { height: 28px; }
+  }
+
   footer { text-align: center; color: var(--muted); font-size: 12px; padding: 40px 0; }
 </style>
 </head>
@@ -282,6 +311,7 @@
     <div class="trip-progress" id="trip-progress"></div>
     <p class="disclaimer" id="hero-disclaimer"></p>
   </div>
+  <div class="ornament-footer"></div>
 </header>
 
 <nav class="days">
@@ -300,6 +330,7 @@
   <div class="bg"><img src="photos/berries-macro.jpg" alt="Карельские ягоды" loading="lazy"></div>
   <div class="scrim"></div>
   <div class="wrap"><div class="glossary-panel" id="glossary-root"></div></div>
+  <div class="ornament-footer"></div>
 </section>
 
 <footer>Составлено вручную · заменить данные на свой маршрут в trip.js</footer>
@@ -392,16 +423,18 @@
       <div class="scrim"></div>
       <div class="num${isToday ? " today" : ""}">${String(i + 1).padStart(2, "0")} / ${String(TRIP.days.length).padStart(2, "0")}</div>
       ${img.caption ? `<div class="credit">${img.caption}</div>` : ""}
-      <div class="wrap"><div class="day-panel"></div></div>
+      <div class="wrap"><div class="day-panel"><div class="t-list"></div></div></div>
+      <div class="ornament-footer"></div>
     `;
 
     const contentCol = section.querySelector(".day-panel");
+    const list = section.querySelector(".t-list");
     if (isToday) contentCol.classList.add("today");
-    contentCol.innerHTML = `
+    contentCol.insertAdjacentHTML("afterbegin", `
       <div class="kicker">День ${i + 1}</div>
       <h2>${day.title}</h2>
       <div class="date">${day.date}</div>
-    `;
+    `);
 
     day.events.forEach((ev) => {
       let cls = "t-item";
@@ -423,7 +456,7 @@
           ${ev.meta ? `<div class="meta">${ev.meta}</div>` : ""}
         </div>
       `;
-      contentCol.appendChild(item);
+      list.appendChild(item);
     });
 
     daysRoot.appendChild(section);
